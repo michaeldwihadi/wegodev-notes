@@ -9,19 +9,19 @@
               <span>Notes</span>
             </a>
           </div>
-          
+
           <div class="frame-notes">
             <button @click="newNote" class="bg-success btn btn-new-note">
               + Note Baru
             </button>
 
-            <ListNotes :propNotes="notes" :propsEditNote="editNote"/>
+            <ListNotes :propsEditNote="editNote"/>
           </div>
       </div>
 
       <div class="kanan">
         <!--form-->
-          <FormNotes :propRemoveNote = "removeNote" :propSaveNote = "saveNote" :propUpdateNote = "updateNote" :propDataForm="dataForm"/>
+          <FormNotes :propRemoveNote = "removeNote" :propSaveNote = "saveNote" :propUpdateNote = "updateNote"/>
       </div>
   </div>
 </template>
@@ -34,9 +34,6 @@ export default {
   name: 'App',
   data: function(){
     return {
-      dataForm:{},
-      notes : [{ id: 1, title: 'wegodev', description: 'Ini isi wegodev'},
-              { id: 2,title: 'super user', description: 'Ini isi super user'}]
     }
   },
   components: {
