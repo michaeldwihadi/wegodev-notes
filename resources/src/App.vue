@@ -15,13 +15,13 @@
               + Note Baru
             </button>
 
-            <ListNotes :propsEditNote="editNote"/>
+            <ListNotes/>
           </div>
       </div>
 
       <div class="kanan">
         <!--form-->
-          <FormNotes :propRemoveNote = "removeNote" :propSaveNote = "saveNote" :propUpdateNote = "updateNote"/>
+          <FormNotes :propRemoveNote = "removeNote" :propSaveNote = "saveNote"/>
       </div>
   </div>
 </template>
@@ -61,12 +61,6 @@ export default {
 
       this.notes.push(newNote);
       this.editNote(newId);
-    },
-    updateNote(id,title,description){
-      let noteIndex = this.notes.findIndex(note => note.id === id );
-
-      this.notes[noteIndex].title = title;
-      this.notes[noteIndex].description = description;
     },
    }
 
