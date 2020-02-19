@@ -9,7 +9,7 @@
               <span>Notes</span>
             </a>
           </div>
-          
+
           <div class="frame-notes">
             <button @click="newNote" class="bg-success btn btn-new-note">
               + Note Baru
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import ListNotes from './components/listNotes.vue'
+import ListNotes from './components/listNotes.vue' 
 import FormNotes from './components/formNotes.vue'
 
 export default {
@@ -45,10 +45,11 @@ export default {
   },
   methods: {
     newNote(){
-      this.dataForm = {id:0, title: '', description: ''}
+      this.dataForm = {id:0, title: '', description: '', mode: 'save'}
     },
     editNote(id){
       this.dataForm = this.notes.find(note => note.id === id);
+      this.dataForm.mode = 'update';
     },
     saveNote(title,description){
       let newId = 0;

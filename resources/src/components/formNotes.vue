@@ -1,10 +1,11 @@
 <template>
   <div class="formNotes">
 
-    <form @submit="submitNote">
+    <form>
       <div class="menu">
         <button type="button" @click="submitRemove" class="bg-danger btn btn-delete">Delete</button>
-        <button type="submit" class="bg-sucess btn">Save</button>
+        <button type="button" @click="submitSave" class="bg-success btn" v-if="mode == 'save'">Save</button>
+        <button type="button" @click="submitUpdate" class="bg-success btn" v-if="mode == 'update'">Update</button>
       </div>
 
       <div class="content">
@@ -38,21 +39,16 @@
       return{
         id: '0',
         title: '',
-        description: ''
+        description: '',
+        mode: 'save'
       }
     },
     methods: {
-      submitNote(e){
-        e.preventDefault();
-
-        if(this.id === 0)
-        {
+      submitSave(){
           this.propSaveNote(this.title, this.description);
-        }
-        else{
+      },
+      submitUpdate(){
           this.propUpdateNote(this.id, this.title, this.description);
-        }
-
       },
       submitRemove(){
         this.propRemoveNote(this.id);
@@ -70,6 +66,7 @@
         this.id = note.id;
         this.title = note.title;
         this.description = note.description;
+        this.mode = note.mode;
       }
     }
   }
