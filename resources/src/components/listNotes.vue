@@ -12,18 +12,13 @@
 </template>
 
 <script type="text/javascript">
+  import axios from 'axios';
 
   export default {
     name: 'listNotes',
     data: function (){
       return{
-        notes : [{ id: 1, title: 'wegodev', description: 'Ini isi wegodev'},
-                { id: 2,title: 'super user', description: 'Ini isi super user'}]
-      }
-    },
-    props: {
-      propsEditNote : {
-        type : Function
+        notes : []
       }
     },
     methods:{
@@ -32,20 +27,15 @@
         dataForm.mode = 'update';
         this.$root.$emit('emitForm', dataForm);
       },
-      createNewId(){
-        let newId = 0;
-
-        if(this.notes.length === 0){
-          newId = 1;
-        }
-        else{
-          newId = this.notes[this.notes.length - 1].id + 1;
-        }
-
-        return newId;
+      getData(){
+        axios.get('http://localhost/wegodev-notes/note').then(response => {
+          this.notes = response.data;
+        });
       }
     },
     mounted(){
+      this.getData();
+
       this.$root.$on('emitRemoveNote', data => {
           let noteIndex = this.notes.findIndex(note => note.id === data.id );
           this.notes.splice(noteIndex, 1);
@@ -59,12 +49,10 @@
       });
 
       this.$root.$on('emitSaveNote', data => {
-        let newId = this.createNewId();
+        let newNote = {id: data.id,'title' : data.title , 'description' : data.description}
 
-        let newNote = {id: newId,'title' : data.title , 'description' : data.description}
-
-        this.notes.push(newNote);
-        this.editNote(newId);
+        this.notes.unshift(newNote);
+        this.editNote(data.id);
       });
 
     }

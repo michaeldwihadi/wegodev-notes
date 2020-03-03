@@ -19,6 +19,8 @@
 
 <script type="text/javascript">
 
+  import axios from 'axios';
+
   export default {
     name: 'formNotes',
     props: {
@@ -34,11 +36,20 @@
     methods: {
 
       submitSave(){
-          let data = {
-            title : this.title,
-            description : this.description
-          }
-          this.$root.$emit('emitSaveNote', data);
+          let params = new URLSearchParams();
+          params.append('title',this.title);
+          params.append('description',this.description);
+
+          axios.post('http://localhost/wegodev-notes/note/create', params).then(response => {
+            let data = {
+              id : response.data.id,
+              title : this.title,
+              description : this.description
+            }
+            this.$root.$emit('emitSaveNote', data);
+
+          });
+
       },
       submitUpdate(){
           let data = {
