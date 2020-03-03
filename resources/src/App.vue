@@ -15,28 +15,25 @@
               + Note Baru
             </button>
 
-            <ListNotes :propNotes="notes" :propsEditNote="editNote"/>
+            <ListNotes/>
           </div>
       </div>
 
       <div class="kanan">
         <!--form-->
-          <FormNotes :propRemoveNote = "removeNote" :propSaveNote = "saveNote" :propUpdateNote = "updateNote" :propDataForm="dataForm"/>
+          <FormNotes/>
       </div>
   </div>
 </template>
 
 <script>
-import ListNotes from './components/listNotes.vue' 
+import ListNotes from './components/listNotes.vue'
 import FormNotes from './components/formNotes.vue'
 
 export default {
   name: 'App',
   data: function(){
     return {
-      dataForm:{},
-      notes : [{ id: 1, title: 'wegodev', description: 'Ini isi wegodev'},
-              { id: 2,title: 'super user', description: 'Ini isi super user'}]
     }
   },
   components: {
@@ -45,40 +42,11 @@ export default {
   },
   methods: {
     newNote(){
-      this.dataForm = {id:0, title: '', description: '', mode: 'save'}
-    },
-    editNote(id){
-      this.dataForm = this.notes.find(note => note.id === id);
-      this.dataForm.mode = 'update';
-    },
-    saveNote(title,description){
-      let newId = 0;
+      let dataForm = {id:0, title: '', description: '', mode: 'save'}
+      this.$root.$emit('emitForm', dataForm);
 
-      if(this.notes.length === 0){
-        newId = 1;
-      }
-      else{
-        newId = this.notes[this.notes.length - 1].id + 1;
-      }
-
-      let newNote = {id: newId ,'title' : title , 'description' : description}
-
-      this.notes.push(newNote);
-      this.editNote(newId);
-    },
-    updateNote(id,title,description){
-      let noteIndex = this.notes.findIndex(note => note.id === id );
-
-      this.notes[noteIndex].title = title;
-      this.notes[noteIndex].description = description;
-    },
-    removeNote(id){
-      let noteIndex = this.notes.findIndex(note => note.id === id );
-
-      this.notes.splice(noteIndex, 1);
-     }
-   }
-
+    }
+  }
 }
 </script>
 
